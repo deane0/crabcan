@@ -2,6 +2,8 @@ use std::path::PathBuf;
 
 use clap::Parser;
 
+use crate::errors::ErrorCode;
+
 #[derive(Debug, Parser)]
 #[clap(author, version, about, long_about = None)]
 pub struct Args {
@@ -19,10 +21,10 @@ pub struct Args {
 
     /// Directory to mount as root of the container
     #[clap(parse(from_os_str), short = 'm', long = "mount")]
-    pub mount_dir: PathBuf
+    pub mount_dir: PathBuf,
 }
 
-pub fn parse_args() -> Args {
+pub fn parse_args() -> Result<Args, ErrorCode> {
     let args = Args::parse();
 
     if args.debug {
@@ -31,15 +33,16 @@ pub fn parse_args() -> Args {
         setup_log(log::LevelFilter::Info);
     }
 
-    // TODO
-    // Validate arguments
+    if !args.mount_dir.exists() || !args.mount_dir.is_dir() {
+        return Err(ErrorCode::ArgumentInvalid("mount"));
+    }
 
-    args
+    Ok(args)
 }
 
 pub fn setup_log(level: log::LevelFilter) {
     env_logger::Builder::from_default_env()
-    .format_timestamp_secs()
-    .filter(None, level)
-    .init();
+        .format_timestamp_secs()
+        .filter(None, level)
+        .init();
 }
