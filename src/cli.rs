@@ -13,7 +13,7 @@ pub struct Args {
 
     /// Command to execute inside the container
     #[clap(short, long)]
-    command: String,
+    pub command: String,
 
     /// User ID to create inside the container
     #[clap(short, long)]

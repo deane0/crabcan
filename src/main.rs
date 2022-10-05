@@ -3,10 +3,11 @@ use std::process::exit;
 use errors::exit_with_return_code;
 
 mod cli;
+mod config;
+mod container;
 mod errors;
 
 fn main() {
-    // let args = cli::parse_args();
     match cli::parse_args() {
         Ok(args) => {
             log::info!("{:?}", args);
