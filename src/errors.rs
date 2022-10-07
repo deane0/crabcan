@@ -5,6 +5,10 @@ use std::{fmt, process::exit};
 // Contains all possible errors in our tool
 pub enum ErrorCode {
     ArgumentInvalid(&'static str),
+
+    NotSupported(u8),
+
+    ContainerError(u8),
 }
 
 #[allow(unreachable_patterns)]

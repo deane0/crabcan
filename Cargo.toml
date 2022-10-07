@@ -8,3 +8,5 @@ edition = "2021"
 clap = { version = "3.2", features = ["derive"] }
 log = "0.4"
 env_logger = "0.9"
+nix = "0.25"
+scan_fmt = "0.2"
